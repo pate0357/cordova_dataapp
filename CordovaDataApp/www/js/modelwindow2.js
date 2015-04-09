@@ -1,6 +1,6 @@
 var peoplegift;
 var option_id;
-var displaygiftpage;
+var displaygiftpage="";
 var model={
 
     modelwindow:function(people_gift)
@@ -176,7 +176,7 @@ var model={
             li.innerHTML =gift_idea+" - "+occ_name;
 //          li.innerHTML = rs.rows.item(i).person_name;
           list.appendChild(li);
-//            app.addHammer(li);
+            model.adddeleteHammer(li);
         }
       console.log("displayed the current contents of the stuff table");
     	}, 
@@ -185,6 +185,10 @@ var model={
       	console.log("transaction to list contents of stuff failed")
     });
   }); 
+    },
+    giftdelete:function()
+    {
+        
     },
     
     
@@ -277,24 +281,54 @@ var model={
     });
   }); 
     },
+    adddeleteHammer: function (element) {
+        console.log(element);
+        // Add Hammer double tap event
+        var mc = new Hammer.Manager(element);
+//        document.querySelector("#gifts-for-person").style.display = "none";
+        // Tap recognizer with minimal 2 taps
+        mc.add(new Hammer.Tap({
+            event: 'doubletap',
+            taps: 2
+        }));
+        // Single tap recognizer
+//        mc.add(new Hammer.Tap({
+//            event: 'singletap'
+//        }));
+        // we want to recognize this simulatenous, so a quadrupletap will be detected even while a tap has been recognized.
+        mc.get('doubletap').recognizeWith('singletap');
+        // we only want to trigger a tap, when we don't have detected a doubletap
+        mc.get('singletap').requireFailure('doubletap');
 
+        mc.on("doubletap", function (ev) {
+
+//            if (ev.type == "singletap") {
+                
+//                alert("Hi");
+//            app.giftpage(ev.target.id);
+                model.deletegiftpeople(ev.target.id);
+                //                app.edit(contactList[ev.target.id]);
+
+//            } else if (ev.type == "doubletap") {
+//                alert("Hi2");
+//                app.newmap(ev.target);
+//                app.deletepeople(ev.target.id);
+//                console.log(ev.target.id);
+            
+        });
+    }, 
     
-   
+    deletegiftpeople:function(peplegift)
+    {
+        alert(peplegift);
+//        db.transaction(function(tx){
+////          alert("hi");
+//        tx.executeSql('DELETE FROM people WHERE person_id= ?', [delete_people]);
+//       });
+//       model.showgift_occasionlist(); 
     
-     
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-}
+    }
+ 
+        
+    }
+    
