@@ -2,6 +2,7 @@
 //var people_page;
 var displaypage;
 var db = openDatabase('mydb', '1.0', 'pate0357', 2 * 1024 * 1024);
+var persongift;
 var app = {
 //    db:null,
 //  version:'1.0',
@@ -63,7 +64,7 @@ var app = {
     document.querySelector("[data-role=overlay]").style.display="none";
 //    ev.currentTarget.setAttribute("displaypage","peoplesave");
 //    var people_page=ev.currentTarget.getAttribute("displaypage");
-//      console.log(people_page);
+
        
 //      app.showlist();
       console.log(displaypage);
@@ -79,7 +80,7 @@ var app = {
   Add: function(ev){
     ev.stopPropagation();
      
-//    console.log(people_page);
+
      displaypage=ev.target.getAttribute("displaypage");
       
       
@@ -95,12 +96,8 @@ var app = {
         
         tx.executeSql('CREATE TABLE people(person_id INTEGER PRIMARY KEY AUTOINCREMENT, person_name varchar)', [], 
                                     function(tx, rs){
-                                        //do something if it works
-//                                        alert("Table stuff created");
                                     },
                                     function(tx, err){
-                                        //failed to run query
-//                                        alert( err.message);
                                     });              
         
        });
@@ -111,13 +108,6 @@ var app = {
        });
           app.peopleupdateList();
       
-//      else 
-//      {
-//            
-//      
-//      }
-      
-//      document.getElementById("txt").value="";
   },
     occasionshowlist:function()
     {
@@ -125,12 +115,8 @@ var app = {
         
         tx.executeSql('CREATE TABLE occasions(occ_id  INTEGER PRIMARY KEY AUTOINCREMENT, occ_name  varchar)', [], 
                                     function(tx, rs){
-                                        //do something if it works
-//                                        alert("Table stuff created");
                                     },
                                     function(tx, err){
-                                        //failed to run query
-//                                        alert( err.message);
                                     });              
         
        });
@@ -139,6 +125,7 @@ var app = {
       console.log(peoplelist);
        db.transaction(function(tx){
         tx.executeSql('INSERT INTO occasions(occ_name) VALUES("'+peoplelist+'")');
+       
        });
        
        model1.occasionupdateList();
@@ -164,14 +151,14 @@ var app = {
           list.appendChild(li);
             app.addHammer(li);
         }
-      console.log("displayed the current contents of the stuff table");
+
     	}, 
       function(tx, err){
       	//error
       	console.log("transaction to list contents of stuff failed")
     });
   });
-//      peoplelist="";
+
 },
     
  swipehammer:function()
@@ -192,7 +179,7 @@ mc.on("panleft", function(ev) {
         document.querySelector("#occasion-list").style.display = "block";
     model1.Occasioninit();
     var occasion = document.getElementById('occasion-list');
-    
+
     var mc1 = new Hammer(occasion);
     mc1.get('pan').set({ direction: Hammer.DIRECTION_ALL });
     mc1.on("panright", function(ev) {
@@ -206,7 +193,7 @@ mc.on("panleft", function(ev) {
     
     
     addHammer: function (element) {
-//        console.log(element);
+
         // Add Hammer double tap event
         var mc = new Hammer.Manager(element);
         document.querySelector("#gifts-for-person").style.display = "none";
@@ -227,17 +214,15 @@ mc.on("panleft", function(ev) {
         mc.on("singletap doubletap", function (ev) {
 
             if (ev.type == "singletap") {
-                
-//                alert("Hi");
+                persongift=ev.target;
+
             app.giftpage(ev.target.id);
                 
-                //                app.edit(contactList[ev.target.id]);
+
 
             } else if (ev.type == "doubletap") {
-//                alert("Hi2");
-//                app.newmap(ev.target);
                 app.deletepeople(ev.target.id);
-//                console.log(ev.target.id);
+
             }
         });
     },
@@ -247,23 +232,36 @@ mc.on("panleft", function(ev) {
         document.querySelector("#people_list").style.display = "none";
         document.querySelector("#gifts-for-person").style.display = "block";
         
-        document.querySelector(".details_gift").innerHTML="Here is gift for"  + people;
-//        var gift=document.getElementById("add-gift");
+        document.querySelector(".headinggift").innerHTML="Here is gift for  "+ persongift.innerHTML;
+
         model.modelwindow(people);
-        
+        model.showgiftidealist();
     },
  
     deletepeople:function(delete_people)
     {
-//        console.log(delete_people);
+
       db.transaction(function(tx){
-//          alert("hi");
+
         tx.executeSql('DELETE FROM people WHERE person_id= ?', [delete_people]);
        });
        app.peopleupdateList(); 
     
+    },
+backbuttonpeopel:function()
+    {
+              
+        document.querySelector("#gifts-for-person").style.display="none";    
+        document.querySelector("#people_list").style.display="block";
+        
+    
+    },
+    backbuttonoccasion:function()
+    {
+        document.querySelector("#occasion-list").style.display="none";    
+        document.querySelector("#people_list").style.display="block";
+        
     }
+   
 }
-
-
 app.init();

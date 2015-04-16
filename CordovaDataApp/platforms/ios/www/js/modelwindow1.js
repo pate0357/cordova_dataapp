@@ -1,87 +1,13 @@
 //var Occasionlist;
 //var people_page2;
+var occasionname;
 var model1={
  Occasioninit: function()
     {
     
     
-//    document.querySelector("[data-role=modal]").style.display="none";
-//    document.querySelector("[data-role=overlay]").style.display="none";
-//    
-//    document.querySelector(".btnAdd2").addEventListener("click", app.Add);
-//    document.getElementById("btnCancel2").addEventListener("click", app.cancel);
-//    document.getElementById("btnSave2").addEventListener("click", app.save);
     model1.occasionupdateList();        
   },
-//  Occasioncancel: function(ev){
-//    document.querySelector("[data-role=modal]").style.display="none";
-//    document.querySelector("[data-role=overlay]").style.display="none";
-//      
-//  },
-//  Occasionsave: function(ev){
-//    document.querySelector("[data-role=modal]").style.display="none";
-//    document.querySelector("[data-role=overlay]").style.display="none";
-//      ev.currentTarget.setAttribute("displaypage","occasionsave");
-//      var occasion_page=ev.currentTarget.getAttribute("displaypage");
-////      console.log(people_page2);
-//      model1.Occasionshowlist(occasion_page);
-//    model1.updateList();      
-//    
-//  },
-//  OccasionAdd: function(ev){
-//      
-//      
-//    ev.stopPropagation();
-//     
-////    console.log(people_page2);
-//      
-////    alert(ev.target.displaypage);
-//    document.querySelector("[data-role=modal]").style.display="block";
-//    document.querySelector("[data-role=overlay]").style.display="block";
-//    
-//  },
-   
-    
-//  Occasionshowlist:function(occasion_page)
-//    
-// { 
-//     console.log(occasion_page);
-//    
-//       if(occasion_page=="occasionsave")
-//      {
-//            
-//      var Occasionlist=document.getElementById("txt").value;
-//      
-//      console.log(Occasionlist);
-//       db.transaction(function(tx){
-//        tx.executeSql('INSERT INTO occasions(occ_name) VALUES("'+Occasionlist+'")');
-//       });
-//       
-//      
-//      }
-//       else
-//      {
-//      var Occasionlist=document.getElementById("txt").value;
-//      
-//       db.transaction(function(tx){
-//        tx.executeSql('INSERT INTO people(person_name) VALUES("'+Occasionlist+'")');
-//       });
-//      }
-//
-//     
-////    Occasionlist="";
-////      if(people_page2=="occasion"){
-////       Occasionlist=document.getElementById("txt").value;
-////      
-////      console.log(Occasionlist);
-////       db.transaction(function(tx){
-////        tx.executeSql('INSERT INTO occasions(occ_name) VALUES("'+Occasionlist+'")');
-////       });
-//       
-//      },
-      
-      
-//      },
     
  occasionupdateList:function(){
   var list = document.querySelector(".occasion");
@@ -133,6 +59,7 @@ var model1={
         mc.on("singletap doubletap", function (ev) {
 
             if (ev.type == "singletap") {
+                occasionname=ev.target;
                 
 //                alert("Hi");
            model1.occasionpage(ev.target.id);
@@ -149,6 +76,9 @@ var model1={
     {
         document.querySelector("#occasion-list").style.display = "none";
         document.querySelector("#gifts-for-occasion").style.display = "block";
+        
+        document.querySelector(".headinggiftoccasion").innerHTML ="Gift for " + occasionname.innerHTML;
+        
 //        alert(occasion_list);
         
 //        var gift=document.getElementById("add-gift");
@@ -164,5 +94,10 @@ var model1={
        });
        model1.occasionupdateList(); 
     
+    },
+     backbuttonoccasiongift:function()
+    {
+        document.querySelector("#occasion-list").style.display = "block";
+        document.querySelector("#gifts-for-occasion").style.display = "none";
     }
 }
