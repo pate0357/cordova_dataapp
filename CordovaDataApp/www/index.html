@@ -1,5 +1,6 @@
 <!doctype html>
 <html>
+
 <head>
     <meta charset="utf-8" />
     <meta name="format-detection" content="telephone=no" />
@@ -15,135 +16,142 @@
 
 <body>
     <div class="wrapper">
-  <section data-role="page" id="people_list">
-      <div id="people">
-    <img src="img/people.svg" class="img1">      
-    <h2 class="heading">People </h2>
-    <button class="btnAdd" displaypage="people">Add</button>  
-    </div>		
-          <p class="details" >
-			Here are all the people for which <em>you</em> buy gifts.
-			</p>
-			<ul data-role="listview" class="people">
-				 
-<!--
+        <section data-role="page" id="people_list">
+            <div id="people">
+                <img src="img/people.svg" class="img1">
+                <h2 class="heading">People </h2>
+                <button class="btnAdd" displaypage="people">Add</button>
+            </div>
+            <p class="details">
+                Here are all the people for which <em>you</em> buy gifts.
+            </p>
+            <ul data-role="listview" class="people">
+
+                <!--
 				list of items to be dynamically added 
 				single-tap to add gift for person through gifts-for-person page
 				double-tap to remove person
 -->
-				
-			</ul>
-  </section>
 
-  
-<!--/****this occasion screen*****/-->
-        
-    <section data-role="page" id="occasion-list">
-        <div id="occasionlist">
-<!--		<button class="backbtn" onclick="app.backbuttonoccasion();" >Back</button>	-->
-        <img src="img/occasion.svg" class="img1">    
-        <h2 class="headingoccasion">Occasions</h2>
-        <button class="btnAdd2" displaypage="occasion">Add</button>
-        </div>    
-			<p class="details">
-			Here is the list of occasions when <em>you</em> buy gifts.
-			</p>
-			<ul data-role="listview" class="occasion">
-				 
-<!--
+            </ul>
+        </section>
+
+
+        <!--/****this occasion screen*****/-->
+
+        <section data-role="page" id="occasion-list">
+            <div id="occasionlist">
+                <!--		<button class="backbtn" onclick="app.backbuttonoccasion();" >Back</button>	-->
+                <img src="img/occasion.svg" class="img1">
+                <h2 class="headingoccasion">Occasions</h2>
+                <button class="btnAdd2" displaypage="occasion">Add</button>
+            </div>
+            <p class="details">
+                Here is the list of occasions when <em>you</em> buy gifts.
+            </p>
+            <ul data-role="listview" class="occasion">
+
+                <!--
 				list of items to be dynamically added 
 				single-tap to add gift for occasion through gifts-for-occasion page
 				double-tap to remove occasion
 -->
-				
-			</ul>
-		</section>
-<!--     /****this gift list******/   -->
-        <section data-role="page" id="gifts-for-person" >
+
+            </ul>
+        </section>
+        <!--     /****this gift list******/   -->
+        <section data-role="page" id="gifts-for-person">
+
             <img src="img/gift.svg" class="img1">
-            <button class="backbtn" onclick="app.backbuttonpeopel();" >Back</button>
-			<h2 class="headinggift">Gift Ideas </h2>
-            <button class="btnAdd3" displaypage="gifts-for-person">Add</button>
-			<p class="details_gift">
-			Here are all the gifts ideas for <span>PERSON</span> for all occasions.
-			</p>
-			<ul data-role="listview" class="gifts_person" >
-				 
-<!--
+            <h2 class="headinggift">Gift Ideas </h2>
+            <div id="gift_person_occasion">
+                <button class="backbtn" onclick="app.backbuttonpeopel();">Back</button>
+                <button class="btnAdd3" displaypage="gifts-for-person">Add</button>
+            </div>
+            <p class="details_gift">
+                Here are all the gifts ideas for <span>PERSON</span> for all occasions.
+            </p>
+            <ul data-role="listview" class="gifts_person">
+
+                <!--
 				list of items to be dynamically added 
 				single-tap gift idea to toggle purchased state for gift
  				double-tap gift idea to remove from list
 -->
-				
-			</ul>
-		</section>
-<!--	/******this is gift ideas list****/	-->
-		<section data-role="page" id="gifts-for-occasion">
+
+            </ul>
+        </section>
+        <!--	/******this is gift ideas list****/	-->
+        <section data-role="page" id="gifts-for-occasion">
             <img src="img/gift.svg" class="img1">
-			<button class="backbtn" onclick="model1.backbuttonoccasiongift();" >Back</button>
-            <h2 class="headinggiftoccasion" >Gift Ideas for occasion </h2>
-            <button class="btnAdd4" displaypage="gifts-for-occasion">Add</button>
-			<p class="details">
-			Here are all the gift ideas for <span>OCCASION</span> for all people.
-			</p>
-			<ul data-role="listview" class="gifts_occasion">
-				 
-<!--
+
+            <h2 class="headinggiftoccasion">Gift Ideas for occasion </h2>
+            <div id="gift_person_occasion">
+                <button class="backbtn" onclick="model1.backbuttonoccasiongift();">Back</button>
+                <button class="btnAdd4" displaypage="gifts-for-occasion">Add</button>
+            </div>
+            <p class="details">
+                Here are all the gift ideas for <span>OCCASION</span> for all people.
+            </p>
+            <ul data-role="listview" class="gifts_occasion">
+
+                <!--
 				list of items to be dynamically added 
 				single-tap gift idea to toggle purchased state for gift
 				double-tap gift idea to remove from list
 -->
-				
-			</ul>
-		</section>
-        
-           
-<div data-role="overlay">&nbsp;</div>
 
-<!--/******model window for person and occasion******/    -->
-  <div data-role="modal">
-    <h3>Title (new person | occasion)</h3>
-    <form>
-     
-      <div class="formBox">
-        <input type="text" id="txt" name="txt" class="lg" placeholder="Enter a persone name here please"/>
-      </div>
-      <div class="formBox">
-        <input type="button" id="btnCancel2" value="Cancel" class="btn"/>
-        <input type="button" id="btnSave2" value="Save" class="btn"/>
-      </div>
-    </form>
-  </div>
-<!--    /******model window for gift and ideas******/-->
+            </ul>
+        </section>
+
+
+        <div data-role="overlay">&nbsp;</div>
+
+        <!--/******model window for person and occasion******/    -->
+        <div data-role="modal">
+            <h3>Title (new person | occasion)</h3>
+            <form>
+
+                <div class="formBox">
+                    <input type="text" id="txt" name="txt" class="lg" placeholder="Enter a persone name here please" />
+                </div>
+                <div class="formBox">
+                    <input type="button" id="btnCancel2" value="Cancel" class="btn" />
+                    <input type="button" id="btnSave2" value="Save" class="btn" />
+                </div>
+            </form>
+        </div>
+        <!--    /******model window for gift and ideas******/-->
         <div data-role="modal" id="add-gift">
-		<h3>Title (new gift for person | occasion)</h3>
-		<form>
-			<div class="formBox">
-				<select id="list-per-occ">
-<!--					<option value="0">Choose one</option>-->
-<!--					 list of options built from person list or occasion list -->
-				</select>
-			</div>
-			<div class="formBox">
-				<input type="text" id="txt1" name="txt" class="lg" placeholder="Enter a persone name here please"/>
-			</div>
-			<div class="formBox">
-				<input type="button" id="btnCancel3" value="Cancel" class="btn"/>
-        <input type="button" id="btnSave3" value="Save" class="btn"/>
-			</div>
-		</form>	
-	</div>
-        
-        
-  
-    </div> 
+            <h3>Title (new gift for person | occasion)</h3>
+            <form>
+                <div class="formBox">
+                    <select id="list-per-occ">
+                        <!--					<option value="0">Choose one</option>-->
+                        <!--					 list of options built from person list or occasion list -->
+                    </select>
+                </div>
+                <div class="formBox">
+                    <input type="text" id="txt1" name="txt" class="lg" placeholder="Enter a persone name here please" />
+                </div>
+                <div class="formBox">
+                    <input type="button" id="btnCancel3" value="Cancel" class="btn" />
+                    <input type="button" id="btnSave3" value="Save" class="btn" />
+                </div>
+            </form>
+        </div>
+
+
+
+    </div>
     <script src="js/jquery-2.1.3.js"></script>
     <script type="text/javascript" src="js/hammer.min.js"></script>
     <script src="js/modelwindow2.js" type="text/javascript"></script>
     <script src="js/modelwindow1.js" type="text/javascript"></script>
     <script src="js/index.js"></script>
-	
+
 </body>
+
 </html>
 
 

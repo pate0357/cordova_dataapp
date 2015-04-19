@@ -22,39 +22,33 @@ var model={
     document.getElementById("btnCancel3").addEventListener("click", model.giftcancel);
     document.getElementById("btnSave3").addEventListener("click", model.giftsave);
         
-        if(displaygiftpage=="gifts-for-person"){
-       
-       
-     model.showgiftidealist();
-              
-
-     
+        if(displaygiftpage=="gifts-for-person")
+        {
+           model.showgiftidealist();
+        }
+      else
+      {
+           model.showgift_occasionlist();
       }
-      else{
-      model.showgift_occasionlist();
-          
-       }
    
   },
   giftcancel: function(ev){
     document.querySelector("#add-gift").style.display="none";
-
     document.querySelector("[data-role=overlay]").style.display="none";
       
   },
   giftsave: function(){
     document.querySelector("#add-gift").style.display="none";
-
     document.querySelector("[data-role=overlay]").style.display="none";
     
       if(displaygiftpage=="gifts-for-person"){
-//      model.showdropdownList();      
+
       model.giftinsertlist();
           
 
       }
       else{
-//      model.gift_occasion_droplist();
+
       model.occasion_giftinsetlist();
       
       }
@@ -63,9 +57,8 @@ var model={
   giftAdd: function(ev){
     ev.stopPropagation();
     displaygiftpage=ev.target.getAttribute("displaypage");
-
+    
     document.querySelector("#add-gift").style.display="block";
-
     document.querySelector("[data-role=overlay]").style.display="block";
     
       
@@ -84,13 +77,15 @@ var model={
 
   },
     
-    //This is for people gift list//
-  showdropdownList:function(){
-//  var list = document.querySelector(".occasion");
-//  list.innerHTML = "";
+    
+                                           ///////////////////////////////
+                                          //This is for people gift list//
+                                          ////////////////////////////////
+    
+    
+showdropdownList:function(){
      
-  //clear out the list before displaying everything
-  db.transaction(function(tx){
+    db.transaction(function(tx){
     tx.executeSql("SELECT * FROM occasions", [], 
     	function(tx, rs){
       	 var selectmenu=document.querySelector("#list-per-occ");
@@ -108,8 +103,7 @@ var model={
                 dropdownlist.setAttribute("id",+ occasion_id);
                 dropdownlist.setAttribute("value",occasion_name);
                 dropdownlist.innerHTML=occasion_name;
-//            var selectmenu=document.querySelector("#list-per-occ");
-             selectmenu.appendChild(dropdownlist);
+                selectmenu.appendChild(dropdownlist);
              
         }
         
@@ -160,7 +154,7 @@ var model={
   list.innerHTML = "";
 
 
-  //clear out the list before displaying everything
+  
   db.transaction(function(tx){
     tx.executeSql("select g.purchased, g.gift_id, g.gift_idea,o.occ_name,g.purchased from gifts as g inner join occasions as o on o.occ_id=g.occ_id where g.person_id="+peoplegift , [], 
     	function(tx, rs){
@@ -169,7 +163,7 @@ var model={
       	//rs.rows.length is the number of rows in the recordset
         
       	var numStuff = rs.rows.length;
-//      	alert("hi");
+
         for(var i=0; i<numStuff; i++){
           var li = document.createElement("li");
 
@@ -353,7 +347,7 @@ var model={
           list.appendChild(li);
            model.addoccasiondeleteHammer(li);
         }
-//      console.log("displayed the current contents of the stuff table");
+
     	}, 
       function(tx, err){
       	//error
@@ -363,7 +357,7 @@ var model={
     },
     addoccasiondeleteHammer: function (element) {
            var mc = new Hammer.Manager(element);
-//        document.querySelector("#gifts-for-person").style.display = "none";
+
         // Tap recognizer with minimal 2 taps
         mc.add(new Hammer.Tap({
             event: 'doubletap',
