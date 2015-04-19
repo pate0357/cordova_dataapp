@@ -81,11 +81,13 @@ var app = {
                 function (tx, err) {});
 
         });
+
         var peoplelist = document.getElementById("txt").value;
 
         db.transaction(function (tx) {
             tx.executeSql('INSERT INTO people(person_name) VALUES("' + peoplelist + '")');
         });
+
         app.peopleupdateList();
 
     },
@@ -99,7 +101,7 @@ var app = {
         });
         var peoplelist = document.getElementById("txt").value;
 
-        console.log(peoplelist);
+
         db.transaction(function (tx) {
             tx.executeSql('INSERT INTO occasions(occ_name) VALUES("' + peoplelist + '")');
 
@@ -122,7 +124,7 @@ var app = {
                     for (var i = 0; i < numStuff; i++) {
                         var li = document.createElement("li");
                         var persone_name = rs.rows.item(i).person_id;
-                        //            console.log(persone_name);
+
                         var data_person = li.setAttribute("id", +persone_name);
                         li.innerHTML = rs.rows.item(i).person_name;
                         list.appendChild(li);

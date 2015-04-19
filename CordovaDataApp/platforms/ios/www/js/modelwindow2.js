@@ -1,6 +1,7 @@
 var peoplegift;
 var option_id;
-var displaygiftpage;
+var displaygiftpage="";
+var dropdownlist;
 var model={
 
     modelwindow:function(people_gift)
@@ -14,85 +15,82 @@ var model={
     {
       peoplegift=people_gift;
         
-            
+         
     document.querySelector(".btnAdd3").addEventListener("click", model.giftAdd);
     document.querySelector(".btnAdd4").addEventListener("click", model.giftAdd);    
 
     document.getElementById("btnCancel3").addEventListener("click", model.giftcancel);
     document.getElementById("btnSave3").addEventListener("click", model.giftsave);
         
-        if(displaygiftpage=="gifts-for-person"){
-     alert("people");
-            
-      model.showgiftidealist();   
-//      model.giftinsertlist();
-     
-      }
-      else{
-      alert("occasion");
-      model.showgift_occasionlist();
-
-   
+        if(displaygiftpage=="gifts-for-person")
+        {
+           model.showgiftidealist();
+        }
+      else
+      {
+           model.showgift_occasionlist();
       }
    
   },
   giftcancel: function(ev){
     document.querySelector("#add-gift").style.display="none";
-//      document.querySelector("[data-role=modal]").style.display="none";
     document.querySelector("[data-role=overlay]").style.display="none";
       
   },
   giftsave: function(){
     document.querySelector("#add-gift").style.display="none";
-//      document.querySelector("[data-role=modal]").style.display="none";
     document.querySelector("[data-role=overlay]").style.display="none";
     
       if(displaygiftpage=="gifts-for-person"){
-      model.showdropdownList();      
+
       model.giftinsertlist();
+          
 
       }
       else{
-    model.gift_occasion_droplist();
-      model.occasion_giftinsetlist();
 
+      model.occasion_giftinsetlist();
+      
       }
       
   },
   giftAdd: function(ev){
     ev.stopPropagation();
-     displaygiftpage=ev.target.getAttribute("displaypage");
-//      console.log(displaygiftpage);
+    displaygiftpage=ev.target.getAttribute("displaypage");
+    
     document.querySelector("#add-gift").style.display="block";
-
     document.querySelector("[data-role=overlay]").style.display="block";
     
       
     if(displaygiftpage=="gifts-for-person"){
         document.querySelector("#add-gift h3").innerHTML=  "Gifts  for  "+persongift.innerHTML;
-      model.showdropdownList();      
-//      model.giftinsertlist();
-        alert("person");  
+            model.showdropdownList();
+
+        
       }
       else{
       document.querySelector("#add-gift h3").innerHTML=  "Gifts  for  "+ occasionname.innerHTML;      
       model.gift_occasion_droplist();
-   alert("occasion"); 
-      }
+       }
       
 
-//      model.showdropdownList();
+
   },
     
-    //This is for people gift list//
-  showdropdownList:function(){
-//  var list = document.querySelector(".occasion");
-//  list.innerHTML = "";
-  //clear out the list before displaying everything
-  db.transaction(function(tx){
+    
+                                           ///////////////////////////////
+                                          //This is for people gift list//
+                                          ////////////////////////////////
+    
+    
+showdropdownList:function(){
+     
+    db.transaction(function(tx){
     tx.executeSql("SELECT * FROM occasions", [], 
     	function(tx, rs){
-      	//success
+      	 var selectmenu=document.querySelector("#list-per-occ");
+        selectmenu.innerHTML="";
+        //success
       	//rs.rows.item(0).name would be the contents of the first row, name column
       	//rs.rows.length is the number of rows in the recordset
       	var numStuff = rs.rows.length;
@@ -105,15 +103,12 @@ var model={
                 dropdownlist.setAttribute("id",+ occasion_id);
                 dropdownlist.setAttribute("value",occasion_name);
                 dropdownlist.innerHTML=occasion_name;
-            var selectmenu=document.querySelector("#list-per-occ");
-             selectmenu.appendChild(dropdownlist);
+                selectmenu.appendChild(dropdownlist);
              
         }
-          var index = document.getElementById("list-per-occ").selectedIndex;
-
-       
-        option_id = document.getElementById("list-per-occ").options[index].id;
-        console.log(option_id);
+        
+          
+      
     	}, 
       function(tx, err){
       	//error
@@ -126,6 +121,9 @@ var model={
     
   giftinsertlist:function()
   {
+          var index = document.getElementById("list-per-occ").selectedIndex;
+          option_id = document.getElementById("list-per-occ").options[index].id;
+      
         db.transaction(function(tx){
         
         tx.executeSql('CREATE TABLE gifts (gift_id  INTEGER PRIMARY KEY AUTOINCREMENT,person_id INTEGER,occ_id INTEGER,gift_idea varchar,purchased boolean)', [], 
@@ -142,11 +140,12 @@ var model={
   
           
     var  peoplelist=document.getElementById("txt1").value;
-//      console.log(peoplelist);
+
        db.transaction(function(tx){
         tx.executeSql('INSERT INTO gifts(person_id,occ_id,gift_idea,purchased) VALUES("'+peoplegift+'","'+option_id+'","'+peoplelist+'","false")');
        });
           model.showgiftidealist();
+          
       },
   
     showgiftidealist:function()
@@ -155,7 +154,7 @@ var model={
   list.innerHTML = "";
 
 
-  //clear out the list before displaying everything
+  
   db.transaction(function(tx){
     tx.executeSql("select g.purchased, g.gift_id, g.gift_idea,o.occ_name,g.purchased from gifts as g inner join occasions as o on o.occ_id=g.occ_id where g.person_id="+peoplegift , [], 
     	function(tx, rs){
@@ -164,7 +163,7 @@ var model={
       	//rs.rows.length is the number of rows in the recordset
         
       	var numStuff = rs.rows.length;
-//      	alert("hi");
+
         for(var i=0; i<numStuff; i++){
           var li = document.createElement("li");
 
@@ -201,7 +200,7 @@ var model={
     addgiftdeleteHammer:function(element)
     {
           var mc = new Hammer.Manager(element);
-//        document.querySelector("#gifts-for-person").style.display = "none";
+
         // Tap recognizer with minimal 2 taps
         mc.add(new Hammer.Tap({
             event: 'doubletap',
@@ -224,7 +223,7 @@ var model={
             } else if (ev.type == "doubletap") {
                 
                     model.giftdelete(ev.target.id);
-                console.log(ev.target.id);
+               
             }
         }); 
         
@@ -263,7 +262,9 @@ var model={
          db.transaction(function(tx){
     tx.executeSql("SELECT * FROM people", [], 
     	function(tx, rs){
-      	//success
+      	var selectmenu=document.querySelector("#list-per-occ");
+        selectmenu.innerHTML="";
+        //success
       	//rs.rows.item(0).name would be the contents of the first row, name column
       	//rs.rows.length is the number of rows in the recordset
       	var numStuff = rs.rows.length;
@@ -273,18 +274,16 @@ var model={
             var person_name=rs.rows.item(i).person_name;
             var person_id=rs.rows.item(i).person_id;
             var dropdownlist=document.createElement("option");
-            console.log(person_name);
+          
                 dropdownlist.setAttribute("id",+ person_id);
                 dropdownlist.setAttribute("value",person_name);
                 dropdownlist.innerHTML=person_name;
-            var selectmenu=document.querySelector("#list-per-occ");
+            
              selectmenu.appendChild(dropdownlist);
              
         }
           var index = document.getElementById("list-per-occ").selectedIndex;
-
-       
-        option_id = document.getElementById("list-per-occ").options[index].id;
+          option_id = document.getElementById("list-per-occ").options[index].id;
         
     	}, 
       function(tx, err){
@@ -297,13 +296,16 @@ var model={
     },
     occasion_giftinsetlist:function()
     {
+        var index = document.getElementById("list-per-occ").selectedIndex;
+        option_id = document.getElementById("list-per-occ").options[index].id;
         var  peoplelist=document.getElementById("txt1").value;
-//        alert("This is alert for occasion list");
-      console.log(peoplelist);
+
+      
        db.transaction(function(tx){
         tx.executeSql('INSERT INTO gifts(person_id,occ_id,gift_idea,purchased) VALUES("'+option_id+'","'+peoplegift+'","'+peoplelist+'","false")');
        });
           model.showgift_occasionlist();
+          
     },
         
     
@@ -345,7 +347,7 @@ var model={
           list.appendChild(li);
            model.addoccasiondeleteHammer(li);
         }
-//      console.log("displayed the current contents of the stuff table");
+
     	}, 
       function(tx, err){
       	//error
@@ -355,7 +357,7 @@ var model={
     },
     addoccasiondeleteHammer: function (element) {
            var mc = new Hammer.Manager(element);
-//        document.querySelector("#gifts-for-person").style.display = "none";
+
         // Tap recognizer with minimal 2 taps
         mc.add(new Hammer.Tap({
             event: 'doubletap',
