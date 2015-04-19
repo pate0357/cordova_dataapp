@@ -8,30 +8,24 @@ var app = {
 //  version:'1.0',
     loadRequirements:0,
 	init: function(){
-//		document.addEventListener("deviceready", app.onDeviceReady);
+	document.addEventListener("deviceready", app.onDeviceReady);
 		document.addEventListener("DOMContentLoaded", app.onDomReady);
         
 	},
-//	onDeviceReady: function(){
-//		app.loadRequirements++;
-//		if(app.loadRequirements === 2){
-//			app.start();
-//		}
-//	},
+	onDeviceReady: function(){
+		app.loadRequirements++;
+		if(app.loadRequirements === 2){
+			app.start();
+		}
+	},
 	onDomReady: function(){
-//		app.loadRequirements++;
+		app.loadRequirements++;
 //		if(app.loadRequirements === 2){
 			app.start();
 //		}
 	},
 	start: function(){
         
-//        app.checkDB();
-//        var db = window.openDatabase("myDb", "1.0", "pate0357", 1024000);
-//        db.transaction( app.doTrans, app.successFunc, app.errFunc);
-		//connect to database
-		//build the lists for the main pages based on data
-		//add button and navigation listeners
         app.peopleinit();
         app.swipehammer();
     },
@@ -67,7 +61,7 @@ var app = {
 
        
 //      app.showlist();
-      console.log(displaypage);
+//      console.log(displaypage);
       if(displaypage=="people")
       {
           app.peopleshowlist();
@@ -102,7 +96,7 @@ var app = {
         
        });
       var  peoplelist=document.getElementById("txt").value;
-      console.log(peoplelist);
+//      console.log(peoplelist);
        db.transaction(function(tx){
         tx.executeSql('INSERT INTO people(person_name) VALUES("'+peoplelist+'")');
        });
@@ -155,7 +149,7 @@ var app = {
     	}, 
       function(tx, err){
       	//error
-      	console.log("transaction to list contents of stuff failed")
+//      	console.log("transaction to list contents of stuff failed")
     });
   });
 
@@ -164,31 +158,37 @@ var app = {
  swipehammer:function()
     {
         var people_list = document.getElementById('people_list');
-  document.querySelector("#occasion-list").style.display = "none";
-// create a simple instance
-// by default, it only adds horizontal recognizers
-var mc = new Hammer(people_list);
-
-// let the pan gesture support all directions.
-// this will block the vertical scrolling on a touch-device while on the element
-mc.get('pan').set({ direction: Hammer.DIRECTION_ALL });
-
-// listen to events...
-mc.on("panleft", function(ev) {
-       document.querySelector("#people_list").style.display = "none";
-        document.querySelector("#occasion-list").style.display = "block";
-    model1.Occasioninit();
-    var occasion = document.getElementById('occasion-list');
-
-    var mc1 = new Hammer(occasion);
-    mc1.get('pan').set({ direction: Hammer.DIRECTION_ALL });
-    mc1.on("panright", function(ev) {
-       document.querySelector("#people_list").style.display = "block";
+        var occasion = document.getElementById('occasion-list');
         document.querySelector("#occasion-list").style.display = "none";
         
-});
+        Hammer(people_list).on("swipeleft", function () {
+			
+            document.querySelector("#people_list").style.display = "none";
+            document.querySelector("#occasion-list").style.display = "block";
+            model1.Occasioninit();
+            
 
-});
+			$(people_list).animate({
+				left: "-100%"
+			}, 200);
+			$(occasion).animate({
+				left: "0"
+			}, 200);
+		});
+
+        Hammer(occasion).on("swiperight", function () {
+        
+        document.querySelector("#people_list").style.display = "block";
+        document.querySelector("#occasion-list").style.display = "none";
+			$(people_list).animate({
+				left: "0"
+			}, 200);
+			$(occasion).animate({
+				left: "100%"
+			}, 200);
+		});
+
+
 },
     
     
@@ -235,6 +235,7 @@ mc.on("panleft", function(ev) {
         document.querySelector(".headinggift").innerHTML="Here is gift for  "+ persongift.innerHTML;
 
         model.modelwindow(people);
+        
         model.showgiftidealist();
     },
  
@@ -265,3 +266,12 @@ backbuttonpeopel:function()
    
 }
 app.init();
+
+
+
+
+
+
+
+
+		

@@ -1,6 +1,6 @@
 var peoplegift;
 var option_id;
-var displaygiftpage="";
+var displaygiftpage;
 var model={
 
     modelwindow:function(people_gift)
@@ -13,7 +13,7 @@ var model={
  giftinit: function(people_gift)
     {
       peoplegift=people_gift;
-          
+        
             
     document.querySelector(".btnAdd3").addEventListener("click", model.giftAdd);
     document.querySelector(".btnAdd4").addEventListener("click", model.giftAdd);    
@@ -22,16 +22,16 @@ var model={
     document.getElementById("btnSave3").addEventListener("click", model.giftsave);
         
         if(displaygiftpage=="gifts-for-person"){
-
+     alert("people");
             
-//      model.showgiftidealist();   
+      model.showgiftidealist();   
 //      model.giftinsertlist();
      
       }
       else{
-
+      alert("occasion");
       model.showgift_occasionlist();
-//       model.gift_occasion_droplist();      
+
    
       }
    
@@ -48,12 +48,12 @@ var model={
     document.querySelector("[data-role=overlay]").style.display="none";
     
       if(displaygiftpage=="gifts-for-person"){
-//      model.showdropdownList();      
+      model.showdropdownList();      
       model.giftinsertlist();
 
       }
       else{
-//     model.gift_occasion_droplist();
+    model.gift_occasion_droplist();
       model.occasion_giftinsetlist();
 
       }
@@ -62,7 +62,7 @@ var model={
   giftAdd: function(ev){
     ev.stopPropagation();
      displaygiftpage=ev.target.getAttribute("displaypage");
-      console.log(displaygiftpage);
+//      console.log(displaygiftpage);
     document.querySelector("#add-gift").style.display="block";
 
     document.querySelector("[data-role=overlay]").style.display="block";
@@ -72,12 +72,12 @@ var model={
         document.querySelector("#add-gift h3").innerHTML=  "Gifts  for  "+persongift.innerHTML;
       model.showdropdownList();      
 //      model.giftinsertlist();
-//        alert("person");  
+        alert("person");  
       }
       else{
       document.querySelector("#add-gift h3").innerHTML=  "Gifts  for  "+ occasionname.innerHTML;      
-    model.gift_occasion_droplist();
-//      alert("occasion"); 
+      model.gift_occasion_droplist();
+   alert("occasion"); 
       }
       
 
@@ -113,7 +113,7 @@ var model={
 
        
         option_id = document.getElementById("list-per-occ").options[index].id;
-        
+        console.log(option_id);
     	}, 
       function(tx, err){
       	//error
@@ -142,14 +142,14 @@ var model={
   
           
     var  peoplelist=document.getElementById("txt1").value;
-      console.log(peoplelist);
+//      console.log(peoplelist);
        db.transaction(function(tx){
         tx.executeSql('INSERT INTO gifts(person_id,occ_id,gift_idea,purchased) VALUES("'+peoplegift+'","'+option_id+'","'+peoplelist+'","false")');
        });
           model.showgiftidealist();
       },
   
-     showgiftidealist:function()
+    showgiftidealist:function()
     {
         var list = document.querySelector(".gifts_person");
   list.innerHTML = "";

@@ -28,7 +28,7 @@ var model1={
           list.appendChild(li);
             model1.addHammer(li);
         }
-//      console.log("displayed the current contents of the stuff table");
+
     	}, 
       function(tx, err){
       	//error
@@ -41,7 +41,7 @@ var model1={
     addHammer: function (element) {
         // Add Hammer double tap event
         var mc = new Hammer.Manager(element);
-//        document.querySelector("#gifts-for-occasion").style.display = "none";
+
         // Tap recognizer with minimal 2 taps
         mc.add(new Hammer.Tap({
             event: 'doubletap',
@@ -60,7 +60,7 @@ var model1={
 
             if (ev.type == "singletap") {
                 occasionname=ev.target;
-                
+                displaygiftpage="gifts-for-occasion";
 //                alert("Hi");
            model1.occasionpage(ev.target.id);
                 //                app.edit(contactList[ev.target.id]);
@@ -95,9 +95,9 @@ var model1={
        model1.occasionupdateList(); 
     
     },
-//     backbuttonoccasiongift:function()
-//    {
-//        document.querySelector("#occasion-list").style.display = "block";
-//        document.querySelector("#gifts-for-occasion").style.display = "none";
-//    }
+     backbuttonoccasiongift:function()
+    {
+        document.querySelector("#occasion-list").style.display = "block";
+        document.querySelector("#gifts-for-occasion").style.display = "none";
+    }
 }
